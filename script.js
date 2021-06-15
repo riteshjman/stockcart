@@ -4,6 +4,7 @@ const cartList = document.querySelector('.cart-list');
 const cartTotalValue = document.getElementById('cart-total-value');
 const cartCountInfo = document.getElementById('cart-count-info');
 let cartItemID = 1;
+
 eventListeners();
 function eventListeners(){
     window.addEventListener('DOMContentLoaded', () => {
@@ -12,9 +13,15 @@ function eventListeners(){
     });
    
     document.getElementById('cart-btn').addEventListener('click', () => {
+        
         cartContainer.classList.toggle('show-cart-container');
-     
        
+        
+    });
+    document.getElementById('cart-btn').addEventListener('click', () => {
+        
+        cart-btn.disabled;       
+        
     });
 
     productList.addEventListener('click', purchaseProduct);
@@ -61,15 +68,7 @@ function loadJSON(){
         alert(`User live server or local server`);
     })
 }
-function test()
-{
-    document.query("add-to-cart-btn").onclick = function() {
-        //disable
-        this.disabled = true;
-    
-        //do some validation stuff
-    }
-}
+
 function purchaseProduct(e){
     if(e.target.classList.contains('add-to-cart-btn')){
         let product = e.target.parentElement.parentElement;
@@ -108,22 +107,23 @@ function addToCartList(product){
             <i class = "fas fa-times"></i>
         </button>
 
-
+        
         <div class="col-6">
-        <ul class="pagination justify-content-end set_quantity">
-        <li class="page-item">
-        <button class="page-link " onclick="decreaseNumber('textbox','itemval')">
-        <i class="fas fa-minus"></i> </button>
-        </li>
-        <li class="page-item"><input type="text" name="" class="page-link" value="0" id="textbox" >
-        </li>
-        <li class="page-item">
-        <button class="page-link" onclick="increaseNumber('textbox','itemval')"> <i class="fas fa-plus"></i></button>
-        </li>
-        </ul>
+      
+        
+        <button class="page-link " onclick="decreaseNumber('textbox','${product.price}')"><h5>minus</h5> </button>
+    
+       <input type="text" name="" class="page-link" value="0" id="textbox" >
+      
+        
+        <button class="page-link" onclick="increaseNumber('textbox','${product.price}','${product.stock}')"><h5>plus</h5></button>
+      
+      
         </div>
+        
     `;
     cartList.appendChild(cartItem);
+    
 }
 
 function saveProductInStorage(item){
@@ -156,7 +156,7 @@ function findCartInfo(){
     let products = getProductFromStorage();
     let total = products.reduce((acc, product) => {
         let price = parseFloat(product.price.substr(1)); 
-        return acc += price;
+        return acc = acc + price;
     }, 0); 
 
     return{
@@ -187,8 +187,7 @@ function deleteProduct(e){
 const decreaseNumber = (incdec, itemprice) => {
     var itemval = document.getElementById(incdec);
     var itemprice = document.getElementById(itemprice);
-    console.log( itemprice.innerHTML);
-    // console.log(itemval.value);
+
     if(itemval.value <= 0){
     itemval.value = 0;
     alert('Negative quantity not allowed');
@@ -201,19 +200,22 @@ const decreaseNumber = (incdec, itemprice) => {
     total_cart_amt.innerHTML  = parseInt(product_total_amt.innerHTML) + parseInt(shipping_charge.innerHTML);
     }
     }
-    const increaseNumber = (incdec, itemprice) => {
-    var itemval = document.getElementById(incdec);
-    var itemprice = document.getElementById(itemprice);
-    // console.log(itemval.value);
-    if(itemval.value >= 5){
-    itemval.value = 5;
-    alert('max 5 allowed');
-    itemval.style.background = 'red';
-    itemval.style.color = '#fff';
-    }else{
-    itemval.value = parseInt(itemval.value) + 1;
-    itemprice.innerHTML  = parseInt(itemprice.innerHTML ) + 15;
-    product_total_amt.innerHTML  = parseInt(product_total_amt.innerHTML) + 15;
-    total_cart_amt.innerHTML  = parseInt(product_total_amt.innerHTML) + parseInt(shipping_charge.innerHTML);
-    }
-    }
+    
+    const increaseNumber = (incdec, itemprice,s) => {
+        var itemval = document.getElementById(incdec);
+        var itemprice = document.getElementById(itemprice);
+       console.log(s);
+        if(itemval.value >= 5){
+        itemval.value = 5;
+        alert('max 5 allowed');
+        itemval.style.background = 'red';
+        itemval.style.color = '#fff';
+        }else{
+        itemval.value = parseInt(itemval.value) + 1;
+        itemprice.innerHTML  = parseInt(itemprice.innerHTML ) + 15;
+        product_total_amt.innerHTML  = parseInt(product_total_amt.innerHTML) + 15;
+        total_cart_amt.innerHTML  = parseInt(product_total_amt.innerHTML) + parseInt(shipping_charge.innerHTML);
+        }
+        }
+
+   

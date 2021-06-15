@@ -24,6 +24,19 @@ button{
     cursor: pointer;
     outline: 0;
 }
+.set_quantity
+{
+position: relative;
+
+}
+.set_quantity::after
+{
+width: auto;
+height: auto;
+text-align: center;
+position: absolute;
+
+}
 
 .navbar{
     position: fixed;             
